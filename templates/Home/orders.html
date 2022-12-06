@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}Orders{% endblock title %}
+{% block active3 %}active{% endblock active3 %}
+{% block body %}
+<section id="orders">
+{% if order %}
+    {% if firstobjectofcurrentuser.order_confirmed == False %}
+    <h1>Yor orders</h1>
+    <div class="table__orders__container">
+        <div class="table__orders">
+            <table>
+                <tr>
+                    <th>Pizza Name</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Cancel</th>
+                </tr>
+            {% for pizza in order %}
+                <tr>
+                    <td>{{pizza.Pizza_name}}</th>
+                    <td>{{pizza.Pizza_desc}}</td>
+                    <td>
+                        <form action="/decreament/" method="POST" class="btn__increament__decreament">
+                        {% csrf_token %}
+                            <input type="text" name="order_Id" id="order_Id" value="{{pizza.id}}">
+                            <input type="text" name="Pizza_name_" id="Pizza_name_" value="{{pizza.Pizza_name}}">
+                            <button type="submit"><i class="fas fa-minus"></i></button>
+                        </form>
+                        {{pizza.quantity}}
+                        <form action="/increament/" method="POST" class="btn__increament__decreament">
+                        {% csrf_token %}
+                            <input type="text" name="order_Id" id="order_Id" value="{{pizza.id}}">
+                            <button type="submit"><i class="fas fa-plus"></i></button>
+                        </form>
+                    </td>
+                    <td>Rs.{{pizza.Pizza_price}}</td>
+                    <td><form action="/deleteOrder/" method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="order_id" id="order_id" value="{{pizza.id}}">
+                        <button type="submit"><i class="fas fa-trash-alt"></i> Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <th>Your</th>
+                <th>Total Price =</th>
+                <th>Rs.{{total_price}}</th>
+                <th></th>
+                <th>
+                    <form action="/deleteAllOrder/" method="POST">
+                    {% csrf_token %}
+                        <button type="submit"><i class="fas fa-trash-alt"></i> Delete All</button>
+                    </form>
+                </th>
+            </tr>
+            </table>
+        </div>
+    </div>
+    <div class="confirm_orders">
+        <form action="/orderConfirmed/" method="POST">
+        {% csrf_token %}
+            <button type="submit">Confirm Your Order <i class="fas fa-check"></i></button>
+        </form>
+    </div>
+    <h4>Please Pay on delivery !</h4>
+    {% else %}
+        <h1 class="confirmed_bill">Your Oeder Has Been confirmed Successfully <i class="fas fa-check"></i></h1>
+        <div class="bill_container">
+            <div class="bill_box">
+                <table>
+                    <tr>
+                        <th>Pizza Name</th>
+                        <th>Pizza Quantity</th>
+                        <th>Pizza Price</th>
+                    </tr>
+                    {% for pizza in order %}
+                    <tr>
+                        <td>{{pizza.Pizza_name}}</td>
+                        <td>{{pizza.quantity}}</td>
+                        <td>{{pizza.Pizza_price}}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td>Your Total Price =</td>
+                        <td>Rs.{{total_price}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <form action="/deleteAllOrder/" method="POST">
+        {% csrf_token %}
+            <button class="cancel_all_order" type="submit"><i class="fas fa-times"></i> Cancel your order !</button>
+        </form>
+    {% endif %}
+{% else %}
+<h4>No Orders Yet ! Plesae Make At Least One <a href="/menu/">Order</a></h4>
+{% endif %}
+</section>
+{% endblock body %}
