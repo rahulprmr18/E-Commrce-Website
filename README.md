@@ -1,14 +1,7 @@
 
 # Ecommerce Website In Django
-
-In this tutorial I've created an Ecom website for a Pizza Corner using "Django". I have tried to make this project a begginer friendly and also cover all your concepts.
-
+A website that allows people to buy and sell physical goods, services, and digital products over the internet rather than at a brick-and-mortar location. Through an e-commerce website, a business can process orders, accept payments, manage shipping and logistics, and provide customer service
 
 
-## Demo
 
-https://pizza-corner.herokuapp.com/
 
-# E-Commrce-Website
-# E-Commrce-Website
-# E-Commrce-Website
